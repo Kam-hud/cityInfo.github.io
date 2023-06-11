@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cityInfo</title>
+    <link rel="stylesheet" href="./favicon.ico">
+    <link rel="stylesheet" href="./css/city.css">
+    <script src="./Js/vue.js"></script>
+    <script src="./Js/axios.min.js"></script>
+    <script src="./Js/jquery.min.js"></script>
+</head>
+<body>
+    <div id="app">
+
+        <div class="city_info">
+            <h1>城市信息·搜索系统</h1>
+            <p>City Information</p>
+            <p>Search system</p>
+        </div>
+
+        <div class="search">
+
+            <input type="text" placeholder="Search City" v-model="searchTerm" @input="handleInput">
+
+            <ul v-if="showList">
+                <li v-for="city in filteredCities" :key="city.city" @click="handleClick(city)">{{ city.city }}, {{ city.state }}</li>
+            </ul>
+        </div>
+
+        <div>
+            <div v-for="(city, index) in paginatedCities" :key="city.city" class="city-card">
+                <h2>城市-{{ city.city }}, {{ city.state }}</h2>
+                <p>2000-2013城市增长度:{{city.growth_from_2000_to_2013}}</p> 
+                <p>所处经度:{{city.latitude}}</p>
+                <p>所处纬度:{{city.longitude}}</p>
+                <p>人口数:{{ city.population }},   城市排名:{{city.rank}},   所属州:{{ city.state }}</p>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button :disabled="currentPage === 1" @click="currentPage--" class="btn btn1">上一页</button>
+            <span>{{ currentPage }}/{{ totalPages }}</span>
+            <button :disabled="totalPages === currentPage" @click="currentPage++" class="btn btn1">下一页</button>
+        </div>
+
+    </div>
+</body>
+
+<script src="./Js/city.js"></script>
+
+</html>
